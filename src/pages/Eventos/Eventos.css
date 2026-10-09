@@ -1,0 +1,31 @@
+:root {
+  --cinza-claro: #ded9da;
+  --branco: #ffffff;
+  --cor-texto: #17143f;
+  --vermelho: #b51d44;
+  --vermelho-escuro: #821b47;
+  --azul-claro: rgba(0, 80, 251, 0.21);
+}
+
+
+.eventos-main {
+    padding: 40px 0;
+    min-height: calc(100vh - 120px);
+}
+
+.eventos-container {
+    width: min(1220px, calc(100% - 48px));
+    margin: 0 auto;
+}
+
+.eventos-container h1 {
+    font-size: 32px;
+    color: var(--cor-texto, #17143f);
+    margin-bottom: 24px;
+}
+
+.eventos-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
