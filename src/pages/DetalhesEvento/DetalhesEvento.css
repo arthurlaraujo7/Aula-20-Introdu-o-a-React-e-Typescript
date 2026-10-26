@@ -1,0 +1,251 @@
+.detalhes-page {
+    width: 100%;
+    min-height: 80vh;
+    padding: 40px 20px 60px 20px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+}
+
+.detalhes-container {
+    max-width: 1000px;
+    width: 100%;
+}
+
+/* Banner Superior */
+.detalhes-banner {
+    width: 100%;
+    height: 320px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.detalhes-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.detalhes-titulo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Grid de Conteúdo (Duas Colunas) */
+.detalhes-content-grid {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.detalhes-col-esquerda {
+    flex: 1.6;
+}
+
+.detalhes-col-direita {
+    flex: 1;
+}
+
+/* Abas estilo Pílula */
+.detalhes-abas {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.aba-pill {
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333333;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.aba-pill.ativa {
+    background-color: #b52146;
+    color: #ffffff;
+}
+
+.detalhes-descricao p {
+    font-size: 0.95rem;
+    color: #404040;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+/* Formulário de Comentário */
+.form-comentario {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #707070;
+    padding-bottom: 8px;
+    margin-bottom: 30px;
+}
+
+.form-comentario input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 0.95rem;
+    color: #333333;
+    background: transparent;
+}
+
+.form-comentario input::placeholder {
+    color: #a0a0a0;
+}
+
+.form-comentario button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+}
+
+.form-comentario button img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Lista de Comentários */
+.lista-comentarios {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.item-comentario {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.comentario-header {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.comentario-header strong {
+    font-size: 0.9rem;
+    color: #000000;
+}
+
+.comentario-header span {
+    font-size: 0.75rem;
+    color: #808080;
+}
+
+.item-comentario p {
+    font-size: 0.85rem;
+    color: #505050;
+    line-height: 1.4;
+}
+
+.sem-comentarios {
+    font-size: 0.9rem;
+    color: #808080;
+}
+
+/* Coluna Direita (Informações Principais) */
+.info-titulo {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #000000;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+.info-titulo::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 2px;
+    background-color: #b52146;
+    margin-top: 6px;
+}
+
+.info-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.info-lista li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.info-lista li img {
+    width: 22px;
+    height: 22px;
+}
+
+.info-lista li span {
+    font-size: 0.9rem;
+    color: #333333;
+    font-weight: 500;
+}
+
+.btn-inscrever {
+    width: 100%;
+    max-width: 200px;
+    background-color: #b52146;
+    color: #ffffff;
+    border: none;
+    padding: 10px 0;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-inscrever:hover {
+    background-color: #8e1835;
+}
+
+.btn-inscrever.inscrito {
+    background-color: #2b8a3e;
+}
+
+.detalhes-status {
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 40px;
+}
+
+.detalhes-status.erro {
+    color: #b52146;
+}
+
+.mensagem-feedback {
+    color: #b52146;
+    font-size: 0.85rem;
+    margin-top: 15px;
+}
+
+@media (max-width: 768px) {
+    .detalhes-content-grid {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .btn-inscrever {
+        max-width: 100%;
+    }
+}

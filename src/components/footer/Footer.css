@@ -1,12 +1,7 @@
-.root {
-     --cinza-claro: #ded9da;
-     --branco: #ffffff;
-     --cor-texto: #17143f;
-     --vermelho: #b51d44;
-     --vermelho-escuro: #821b47;
-     --azul-claro: rgba(0, 80, 251, 0.21);
-    }
-
+:root {
+    --branco: #ffffff;
+    --cor-texto: #17143f;
+}
 
 .home-footer {
     padding: 24px;

@@ -2,8 +2,7 @@ import { createContext, useContext } from "react";
 
 import type { AuthSession, LoginPayload, Usuario } from "../types/api";
 
-export interface authContextValue {
-
+export interface AuthContextValue {
     session: AuthSession | null;
     usuario: Usuario | null;
     perfil: string;
@@ -12,10 +11,9 @@ export interface authContextValue {
     login: (payload: LoginPayload) => Promise<void>;
     logout: () => void;
     atualizarUsuario: () => Promise<void>;
-
 }
 
-export const AuthContext = createContext<authContextValue | null>(null);
+export const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function useAuth() {
     const context = useContext(AuthContext);
@@ -23,9 +21,8 @@ export function useAuth() {
     return context;
 }
 
-
-export function perfilEhAdministrador(perfil: string) {
-    return perfil == "administrador" || perfil === "admin";
+export function perfilEhAdministrador(perfil: string){
+    return perfil === "administrador" || perfil === "admin";
 }
 
 export function perfilEhOrganizador(perfil: string) {

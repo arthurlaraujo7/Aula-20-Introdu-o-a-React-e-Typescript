@@ -1,23 +1,21 @@
-import type { ReactNode } from "react";
-
-export interface TipoEvento{
-nomeFantasia: ReactNode;
-idTipoEvento: string;
-tituloTipoEvento: string;
-// tituloEvento: string;
+export interface TipoEvento {
+    idTipoEvento?: string;
+    id?: string;
+    tituloTipoEvento?: string;
+    titulo?: string;
 }
 
 export interface TipoUsuario {
-idTipoUsuario: string;
-titulo: string;
+    tituloTipoUsuario: string;
+    idTipoUsuario: string;
+    titulo: string;
 }
 
-
-
-export interface instituicao{
-idInstituicao: string;
-cnpj: string;
-nomeFantasia: string;
+export interface instituicao {
+    idInstituicao: string;
+    cnpj: string;
+    nomeFantasia: string;
+    endereco: string;
 }
 
 export interface Usuario {
@@ -28,25 +26,34 @@ export interface Usuario {
     idTipoUsuarioNavigation?: TipoUsuario | null;
 }
 
-export interface Evento{
-idEvento: string;
-nomeEvento: string;
-// nome: string;
-descricao: string;
-dataEvento: string;
-imagemUrl?: string | null;
-// idTipoEvento?: string | null;
-// idInstituicao?: string | null;
-idTipoEventoNavigation?: TipoEvento | null;
-// idInstituicaoNavigation?: instituicao | null;
+export interface Evento {
+    idEvento?: string;
+    id?: string;
+    nomeEvento: string;
+    descricao?: string;
+    dataEvento: string;
+    imagemUrl?: string;
+    urlImagem?: string;
+    idTipoEvento?: string;
+    idTipoEventoNavigation?: TipoEvento;
+    idInstituicaoNavigation?: { nomeFantasia?: string };
+}
+
+export interface Comentario {
+    idComentario?: string;
+    descricao: string;
+    dataComentario?: string;
+    idUsuario?: string;
+    idEvento?: string;
+    idUsuarioNavigation?: { nome?: string };
 }
 
 export interface Presenca {
-idPresenca: string;
-situacao: boolean;
-idEvento: string;
-idUsuario?: string | null;
-idEventoNavigation?: Evento | null;
+    evento: any;
+    idPresenca?: string;
+    situacao: boolean;
+    idUsuario: string;
+    idEvento: string;
 }
 
 export interface LoginPayload{
@@ -60,13 +67,31 @@ export interface LoginResponse {
     usuario: Usuario;
 }
 
+
 export interface AuthSession extends LoginResponse {
     usuario: Usuario;
 }
 
-export interface PresencaPayLoad {
-situacao: boolean;
-idEvento: string;
-idUsuario: string | null;
+export interface UsuarioPayload{
+    nome: string;
+    email: string;
+    senha: string;
+    idTipoUsuario: string | null;
 }
 
+export interface ComentarioPayload {
+    descricao:string;
+    idEvento: string;
+    idUsuario: string | null;
+}
+
+export interface PresencaPayload {
+    situacao: boolean;
+    idEvento: string;
+    idUsuario: string | null;
+}
+
+export interface MensagemModeracao{
+    mensagem: string;
+    motivo?: string;
+}

@@ -1,0 +1,242 @@
+.admin-evento-page {
+    width: 100%;
+    min-height: 85vh;
+    padding: 40px 20px 60px 20px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+}
+
+.admin-evento-container {
+    max-width: 1100px;
+    width: 100%;
+}
+
+/* Títulos com Linha Vermelha do Figma */
+.admin-section-titulo,
+.admin-section-subtitulo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #000000;
+    text-align: center;
+    letter-spacing: 0.5px;
+    margin-bottom: 40px;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.admin-section-titulo::after,
+.admin-section-subtitulo::after {
+    content: "";
+    display: block;
+    width: 120px;
+    height: 3px;
+    background-color: #b52146;
+    margin: 8px auto 0 auto;
+    border-radius: 2px;
+}
+
+/* Caixa do Form + Ilustração */
+.admin-cadastro-box {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.admin-ilustracao-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.admin-svg-ilustration {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+}
+
+.admin-form-evento {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* Estilo dos Inputs e Selects (Linha inferior estilo Figma) */
+.form-linha-dupla {
+    display: flex;
+    gap: 20px;
+}
+
+.campo-grupo {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.campo-grupo input,
+.campo-grupo select {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #707070;
+    padding: 8px 4px;
+    font-size: 0.95rem;
+    color: #333333;
+    background: transparent;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.campo-grupo input:focus,
+.campo-grupo select:focus {
+    border-bottom-color: #b52146;
+}
+
+.campo-grupo input::placeholder {
+    color: #a0a0a0;
+}
+
+.campo-grupo select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%3C%23333%3E'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    background-size: 18px;
+}
+
+.campo-com-icone input {
+    padding-right: 30px;
+}
+
+.icone-input {
+    position: absolute;
+    right: 4px;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+}
+
+.icone-upload {
+    position: absolute;
+    right: 4px;
+    font-size: 1.2rem;
+    color: #333333;
+    pointer-events: none;
+}
+
+/* Botão de Cadastro */
+.btn-admin-cadastrar {
+    width: 100%;
+    background-color: #b52146;
+    color: #ffffff;
+    border: none;
+    padding: 12px 0;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-admin-cadastrar:hover {
+    background-color: #8e1835;
+}
+
+.btn-admin-cadastrar:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Grid de Eventos */
+.admin-eventos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.card-evento-admin {
+    border: 1px solid #b52146;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-evento-admin .card-evento-banner {
+    width: 100%;
+    height: 180px;
+}
+
+.card-evento-admin .card-evento-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-evento-admin .card-evento-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.card-evento-admin .card-evento-tag {
+    align-self: flex-start;
+    background-color: #e2e8f0;
+    color: #334155;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 12px;
+}
+
+.card-evento-admin .card-evento-titulo {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000000;
+    margin: 4px 0;
+}
+
+.card-evento-admin .card-evento-descricao {
+    font-size: 0.85rem;
+    color: #666666;
+    line-height: 1.4;
+}
+
+.feedback-mensagem {
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 4px;
+}
+
+.feedback-mensagem.sucesso {
+    color: #2b8a3e;
+}
+
+.feedback-mensagem.erro {
+    color: #b52146;
+}
+
+.admin-status {
+    text-align: center;
+    color: #666666;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 850px) {
+    .admin-cadastro-box {
+        flex-direction: column;
+    }
+
+    .form-linha-dupla {
+        flex-direction: column;
+        gap: 22px;
+    }
+}

@@ -5,12 +5,32 @@
   scroll-behavior: smooth;
 }
 
+:root {
+  --cor-primaria: #c2184b;
+  --cor-primaria-escura: #9f123d;
+  --cor-primaria-suave: #fff3f6;
+  --cor-secundaria: #17143f;
+  --cor-clara: #ffffff;
+  --cor-texto: #151515;
+  --cor-texto-suave: #6e6668;
+  --cor-borda: #ded9da;
+  --cor-fundo: #ffffff;
+  --cor-foco: rgba(194, 24, 75, 0.25);
+  --largura-container: 1220px;
+  --altura-header: 84px;
+  font-family: "Poppins", Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
 body{
   min-width: 320px;
+
   min-height: 100vh;
-  font-family: 'Poppins', Arial, sans-serif;
+
+  font-family: "Poppins", Arial, sans-serif;
   color: #151515;
-  background-color: #f5f5f5;
+  background: #ffffff;
 }
 
 img {
@@ -19,8 +39,9 @@ img {
 }
 
 a,
-button, 
+button,
 input,
-textarea {
+select,
+textarea{
   font: inherit;
 }

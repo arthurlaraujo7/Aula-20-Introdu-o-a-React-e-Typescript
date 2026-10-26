@@ -1,0 +1,226 @@
+.tipo-evento-page {
+    width: 100%;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+}
+
+/* --- SEÇÃO SUPERIOR (FORMULÁRIO) --- */
+.tipo-evento-form-section {
+    padding: 40px 20px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+}
+
+.tipo-evento-form-container {
+    max-width: 1100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tipo-evento-titulo {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #000000;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+}
+
+.tipo-evento-titulo::after {
+    content: "";
+    display: block;
+    width: 120px;
+    height: 3px;
+    background-color: #b52146;
+    margin: 8px auto 0 auto;
+}
+
+.tipo-evento-form-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    width: 100%;
+}
+
+.tipo-evento-ilustracao {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.tipo-evento-ilustracao img {
+    max-width: 320px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.tipo-evento-form {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    width: 100%;
+}
+
+.form-botoes {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.form-botoes button[type="submit"] {
+    width: 100%;
+    background-color: #b52146;
+    color: #ffffff;
+    border: none;
+    padding: 12px 0;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.form-botoes button[type="submit"]:hover {
+    background-color: #8e1835;
+}
+
+.btn-cancelar {
+    background-color: #707070;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.mensagem-feedback {
+    color: #b52146;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+/* --- SEÇÃO INFERIOR (LISTA VERMELHA) --- */
+.tipo-evento-lista-section {
+    background-color: #b52146;
+    color: #ffffff;
+    padding: 50px 20px 80px 20px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 40px;
+}
+
+.tipo-evento-lista-container {
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tipo-evento-lista-titulo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.tipo-evento-lista-titulo::after {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 2px;
+    background-color: #ffffff;
+    margin: 6px auto 0 auto;
+}
+
+/* TABELA */
+.tabela-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.tabela-tipo-eventos {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    color: #ffffff;
+}
+
+.tabela-tipo-eventos th {
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 12px 16px;
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.6);
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+.tabela-tipo-eventos td {
+    padding: 16px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    vertical-align: middle;
+}
+
+.tabela-tipo-eventos .col-acao {
+    text-align: center;
+    width: 90px;
+}
+
+.btn-icone {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.btn-icone:hover {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+
+.btn-icone img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.linha-edicao {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.lista-status {
+    color: #ffffff;
+    text-align: center;
+    margin-top: 25px;
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .tipo-evento-form-flex {
+        flex-direction: column;
+        gap: 30px;
+    }
+}

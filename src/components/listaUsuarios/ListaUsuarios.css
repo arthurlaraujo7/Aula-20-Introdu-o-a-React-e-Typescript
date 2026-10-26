@@ -1,0 +1,68 @@
+.tabela-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto 0 auto;
+    overflow-x: auto;
+}
+
+.tabela-usuarios {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    color: #ffffff;
+}
+
+.tabela-usuarios th {
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 12px 16px;
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.6);
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+.tabela-usuarios td {
+    padding: 16px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    vertical-align: middle;
+}
+
+.tabela-usuarios .col-acao {
+    text-align: center;
+    width: 80px;
+}
+
+.btn-icone {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.btn-icone:hover {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+
+.btn-icone img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.linha-edicao {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.lista-status {
+    color: #ffffff;
+    text-align: center;
+    margin-top: 25px;
+    font-size: 1rem;
+}
