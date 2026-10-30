@@ -1,262 +1,298 @@
-import { useCallback, useEffect, useState, type FormEvent } from "react";
-
-import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
-
-import type { Evento, TipoEvento } from "../../types/api";
+import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
+import visaoImg from "../../assets/visao.png";
+import uploadIcon from "../../assets/upload.png";
 import { eventoService, tipoEventoService } from "../../services/eventPlusService";
-import { getApiErrorMessage } from "../../services/api";
-
-import bannerPadrao from "../../assets/banner-1.png";
-import relogioIcon from "../../assets/icons/relogio.svg";
+import type { Evento, TipoEvento } from "../../types/api";
 import "./EventosAdmin.css";
 
-// ID fixo ou padrão da Instituição SENAI (se não houver endpoint exclusivo)
-const INSTITUICAO_PADRAO_ID = "00000000-0000-0000-0000-000000000000";
+// Função para resolver o caminho da imagem com fallback para a imagem local visaoImg
+function resolverImagem(url?: string): string {
+    if (!url || url.trim() === "") {
+        return visaoImg;
+    }
+    if (url.startsWith("http") || url.startsWith("data:")) {
+        return url;
+    }
+    return `https://localhost:7249/public/images/${url}`;
+}
 
-function EventosAdmin() {
+export default function EventosAdmin() {
     const [eventos, setEventos] = useState<Evento[]>([]);
     const [tiposEvento, setTiposEvento] = useState<TipoEvento[]>([]);
 
-    // Estados do Formulário
+    // Form States
+    const [idEventoEdicao, setIdEventoEdicao] = useState<string | null>(null);
     const [nome, setNome] = useState("");
-    const [dataEvento, setDataEvento] = useState("");
     const [descricao, setDescricao] = useState("");
+    const [dataEvento, setDataEvento] = useState("");
     const [idTipoEvento, setIdTipoEvento] = useState("");
     const [idInstituicao, setIdInstituicao] = useState("");
-    const [imagemUrl, setImagemUrl] = useState("");
+    const [urlFoto, setUrlFoto] = useState("");
+    const [nomeArquivo, setNomeArquivo] = useState("");
 
-    // Estados de Controle
-    const [carregando, setCarregando] = useState(true);
-    const [enviando, setEnviando] = useState(false);
-    const [mensagem, setMensagem] = useState("");
-    const [sucesso, setSucesso] = useState(false);
-
-    const carregarDados = useCallback(async () => {
-        setCarregando(true);
-        setMensagem("");
-        try {
-            const [listaEventos, listaTipos] = await Promise.all([
-                eventoService.listar(),
-                tipoEventoService.listar()
-            ]);
-            setEventos(listaEventos);
-            setTiposEvento(listaTipos);
-        } catch (err) {
-            setMensagem(getApiErrorMessage(err));
-        } finally {
-            setCarregando(false);
-        }
-    }, []);
+    const GUID_SENAI_PADRAO = "357E2AD7-88D3-44FF-A9C2-395B7B979B4B";
 
     useEffect(() => {
-        const timeout = window.setTimeout(() => void carregarDados(), 0);
-        return () => window.clearTimeout(timeout);
-    }, [carregarDados]);
+        carregarDados();
+    }, []);
 
-    async function handleCadastrar(e: FormEvent) {
-        e.preventDefault();
-
-        if (!nome.trim() || !dataEvento || !idTipoEvento) {
-            setMensagem("Preencha todos os campos obrigatórios.");
-            setSucesso(false);
-            return;
+    async function carregarDados() {
+        try {
+            const listaEventos = await eventoService.listar();
+            setEventos(Array.isArray(listaEventos) ? listaEventos : []);
+        } catch (error) {
+            console.error("Erro ao carregar lista de eventos:", error);
         }
 
-        setEnviando(true);
-        setMensagem("");
-
         try {
-            await eventoService.cadastrar({
-                nome: nome.trim(),
-                dataEvento: new Date(dataEvento).toISOString(),
-                descricao: descricao.trim(),
-                imagemUrl: imagemUrl.trim() || undefined,
-                idTipoEvento: idTipoEvento,
-                idInstituicao: idInstituicao || INSTITUICAO_PADRAO_ID
-            });
-
-            setSucesso(true);
-            setMensagem("Evento cadastrado com sucesso!");
-
-            // Limpa o formulário
-            setNome("");
-            setDataEvento("");
-            setDescricao("");
-            setIdTipoEvento("");
-            setIdInstituicao("");
-            setImagemUrl("");
-
-            // Recarrega a lista
-            await carregarDados();
-        } catch (err) {
-            setSucesso(false);
-            setMensagem(getApiErrorMessage(err));
-        } finally {
-            setEnviando(false);
+            const listaTipos = await tipoEventoService.listar();
+            setTiposEvento(Array.isArray(listaTipos) ? listaTipos : []);
+        } catch (error) {
+            console.error("Erro ao carregar tipos de evento:", error);
         }
     }
 
+    // Leitura do ficheiro de imagem e conversão para Base64
+    function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
+        const file = e.target.files?.[0];
+        if (file) {
+            setNomeArquivo(file.name);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setUrlFoto(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+   async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+
+    if (!idTipoEvento) {
+        alert("Por favor, selecione um Tipo de Evento.");
+        return;
+    }
+
+    // Garante um GUID válido com 36 carateres para a Instituição
+    const guidInstituicaoValido = (idInstituicao && idInstituicao.trim().length === 36)
+        ? idInstituicao.trim()
+        : "357E2AD7-88D3-44FF-A9C2-395B7B979B4B";
+
+    // Montagem limpa do payload sem enviar idEvento vazio no cadastro
+    const payload: any = {
+        nomeEvento: nome,
+        descricao: descricao,
+        dataEvento: dataEvento,
+        idTipoEvento: idTipoEvento,
+        idInstituicao: guidInstituicaoValido,
+        imagemUrl: urlFoto || null
+    };
+
+    if (idEventoEdicao) {
+        payload.idEvento = idEventoEdicao;
+    }
+
+    try {
+        if (idEventoEdicao) {
+            await eventoService.atualizar(idEventoEdicao, payload);
+            alert("Evento atualizado com sucesso!");
+        } else {
+            await eventoService.cadastrar(payload);
+            alert("Evento cadastrado com sucesso!");
+        }
+
+        limparFormulario();
+        carregarDados();
+    } catch (error: any) {
+        // Exibe os detalhes exatos do Erro 400 retornados pelo .NET
+        const detalheErro = error.response?.data 
+            ? JSON.stringify(error.response.data, null, 2) 
+            : error.message;
+
+        console.error("Detalhes do erro 400 do Backend:", detalheErro);
+        alert(`Erro no backend: ${detalheErro}`);
+    }
+
+    }
+
+    function handleEditar(evento: any) {
+        setIdEventoEdicao(evento.idEvento);
+        setNome(evento.nomeEvento || evento.nome || "");
+        setDescricao(evento.descricao || "");
+        setDataEvento(evento.dataEvento ? evento.dataEvento.substring(0, 16) : "");
+        setIdTipoEvento(evento.idTipoEvento || "");
+        
+        // Se idInstituicao for um GUID de 36 carateres, carrega-o; senão usa o padrão
+        const inst = evento.idInstituicao;
+        setIdInstituicao(inst && inst.length === 36 ? inst : GUID_SENAI_PADRAO);
+        
+        const foto = evento.imagemUrl || evento.urlFoto || "";
+        setUrlFoto(foto);
+        setNomeArquivo(foto ? "Imagem carregada" : "");
+        
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    async function handleExcluir(idEvento: string) {
+        if (window.confirm("Deseja realmente excluir este evento?")) {
+            try {
+                await eventoService.excluir(idEvento);
+                carregarDados();
+            } catch (error) {
+                console.error("Erro ao excluir evento:", error);
+            }
+        }
+    }
+
+    function limparFormulario() {
+        setIdEventoEdicao(null);
+        setNome("");
+        setDescricao("");
+        setDataEvento("");
+        setIdTipoEvento("");
+        setIdInstituicao("");
+        setUrlFoto("");
+        setNomeArquivo("");
+    }
+
     return (
-        <>
-            <Header />
-            <main className="admin-evento-page">
-                <div className="admin-evento-container">
-                    {/* Título Principal */}
-                    <h1 className="admin-section-titulo">ADMINISTRAÇÃO EVENTO</h1>
+        <main className="admin-container">
+            <h1 className="titulo-secao-figma">ADMINISTRAÇÃO EVENTO</h1>
 
-                    {/* Bloco de Cadastro (Ilustração + Formulário) */}
-                    <div className="admin-cadastro-box">
-                        <div className="admin-ilustracao-container">
-                            {/* Ilustração estilo Figma */}
-                            <svg viewBox="0 0 500 350" fill="none" className="admin-svg-ilustration">
-                                <rect width="500" height="350" rx="40" fill="#F4F4F4" />
-                                <circle cx="150" cy="140" r="40" fill="#B52146" />
-                                <path d="M110 260 C110 200, 190 200, 190 260 Z" fill="#313852" />
-                                <rect x="230" y="160" width="12" height="100" fill="#313852" />
-                                <path d="M210 260 L260 260 L245 220 L225 220 Z" fill="#313852" />
-                                <circle cx="340" cy="160" r="30" fill="#E2E2E2" />
-                                <path d="M300 260 C300 210, 380 210, 380 260 Z" fill="#E2E2E2" />
-                            </svg>
-                        </div>
+            <div className="admin-painel-box">
+                <div className="admin-card-imagem">
+                    <img src={visaoImg} alt="Ilustração Palestrante" />
+                </div>
 
-                        <form className="admin-form-evento" onSubmit={handleCadastrar}>
-                            <div className="form-linha-dupla">
-                                <div className="campo-grupo">
-                                    <input
-                                        type="text"
-                                        placeholder="Nome"
-                                        value={nome}
-                                        onChange={(e) => setNome(e.target.value)}
-                                        disabled={enviando}
-                                        required
-                                    />
-                                </div>
-                                <div className="campo-grupo campo-com-icone">
-                                    <input
-                                        type="datetime-local"
-                                        value={dataEvento}
-                                        onChange={(e) => setDataEvento(e.target.value)}
-                                        disabled={enviando}
-                                        required
-                                    />
-                                    <img src={relogioIcon} alt="Data e Hora" className="icone-input" />
-                                </div>
-                            </div>
-
-                            <div className="campo-grupo">
-                                <input
-                                    type="text"
-                                    placeholder="Descrição"
-                                    value={descricao}
-                                    onChange={(e) => setDescricao(e.target.value)}
-                                    disabled={enviando}
-                                />
-                            </div>
-
-                            <div className="form-linha-dupla">
-                                <div className="campo-grupo">
-                                    <select
-                                        value={idTipoEvento}
-                                        onChange={(e) => setIdTipoEvento(e.target.value)}
-                                        disabled={enviando}
-                                        required
-                                    >
-                                        <option value="" disabled hidden>
-                                            Tipo de Evento
-                                        </option>
-                                        {tiposEvento.map((t) => {
-                                            const id = t.idTipoEvento || (t as { id?: string }).id || "";
-                                            const titulo = t.tituloTipoEvento || (t as { titulo?: string }).titulo || "Categoria";
-                                            return (
-                                                <option key={id} value={id}>
-                                                    {titulo}
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
-                                </div>
-
-                                <div className="campo-grupo">
-                                    <select
-                                        value={idInstituicao}
-                                        onChange={(e) => setIdInstituicao(e.target.value)}
-                                        disabled={enviando}
-                                    >
-                                        <option value="" disabled hidden>
-                                            Instituição
-                                        </option>
-                                        <option value={INSTITUICAO_PADRAO_ID}>
-                                            SENAI Informática
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div className="campo-grupo campo-com-icone">
-                                <input
-                                    type="url"
-                                    placeholder="URL da Foto / Imagem"
-                                    value={imagemUrl}
-                                    onChange={(e) => setImagemUrl(e.target.value)}
-                                    disabled={enviando}
-                                />
-                                <span className="icone-upload">⇪</span>
-                            </div>
-
-                            <button type="submit" className="btn-admin-cadastrar" disabled={enviando}>
-                                {enviando ? "Cadastrando..." : "Cadastrar"}
-                            </button>
-
-                            {mensagem && (
-                                <p className={`feedback-mensagem ${sucesso ? "sucesso" : "erro"}`}>
-                                    {mensagem}
-                                </p>
-                            )}
-                        </form>
+                <form className="admin-form-figma" onSubmit={handleSubmit}>
+                    <div className="form-linha-dupla">
+                        <input
+                            type="text"
+                            className="input-underline"
+                            placeholder="Nome"
+                            value={nome}
+                            onChange={(e) => setNome(e.target.value)}
+                            required
+                        />
+                        <input
+                            type="datetime-local"
+                            className="input-underline"
+                            value={dataEvento}
+                            onChange={(e) => setDataEvento(e.target.value)}
+                            required
+                        />
                     </div>
 
-                    {/* Seção de Listagem de Eventos */}
-                    <h2 className="admin-section-subtitulo">EVENTOS</h2>
+                    <input
+                        type="text"
+                        className="input-underline"
+                        placeholder="Descrição"
+                        value={descricao}
+                        onChange={(e) => setDescricao(e.target.value)}
+                        required
+                    />
 
-                    {carregando ? (
-                        <p className="admin-status">Carregando lista de eventos...</p>
-                    ) : eventos.length === 0 ? (
-                        <p className="admin-status">Nenhum evento cadastrado.</p>
-                    ) : (
-                        <div className="admin-eventos-grid">
-                            {eventos.map((evento) => {
-                                const id = evento.idEvento || (evento as { id?: string }).id;
-                                const categoriaNome =
-                                    evento.idTipoEventoNavigation?.tituloTipoEvento ||
-                                    (evento.idTipoEventoNavigation as { titulo?: string })?.titulo ||
-                                    "Categoria";
+                    <div className="form-linha-dupla">
+                        <select
+                            className="input-underline"
+                            value={idTipoEvento}
+                            onChange={(e) => setIdTipoEvento(e.target.value)}
+                            required
+                        >
+                            <option value="">Tipo de Evento</option>
+                            {tiposEvento.map((tipo: any) => (
+                                <option key={tipo.idTipoEvento} value={tipo.idTipoEvento}>
+                                    {tipo.tituloTipoEvento || tipo.titulo}
+                                </option>
+                            ))}
+                        </select>
 
-                                return (
-                                    <article className="card-evento-admin" key={id}>
-                                        <div className="card-evento-banner">
-                                            <img
-                                                src={evento.imagemUrl || evento.urlImagem || bannerPadrao}
-                                                alt={evento.nomeEvento}
-                                            />
-                                        </div>
-                                        <div className="card-evento-body">
-                                            <span className="card-evento-tag">{categoriaNome}</span>
-                                            <h3 className="card-evento-titulo">{evento.nomeEvento}</h3>
-                                            <p className="card-evento-descricao">
-                                                {evento.descricao || "Sem descrição informada."}
-                                            </p>
-                                        </div>
-                                    </article>
-                                );
-                            })}
+                        <input
+                            type="text"
+                            className="input-underline"
+                            placeholder="Instituição (GUID)"
+                            value={idInstituicao}
+                            onChange={(e) => setIdInstituicao(e.target.value)}
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="file-upload" className="upload-label-figma">
+                            <span>{nomeArquivo || "Foto"}</span>
+                            <img src={uploadIcon} alt="Upload" className="upload-icone-figma" />
+                        </label>
+                        <input
+                            id="file-upload"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            style={{ display: "none" }}
+                        />
+                    </div>
+
+                    <div>
+                        <button type="submit" className="btn-submit-figma">
+                            {idEventoEdicao ? "Atualizar" : "Cadastrar"}
+                        </button>
+                        {idEventoEdicao && (
+                            <button
+                                type="button"
+                                className="btn-cancelar-edicao"
+                                onClick={limparFormulario}
+                            >
+                                Cancelar edição
+                            </button>
+                        )}
+                    </div>
+                </form>
+            </div>
+
+            <h2 className="titulo-secao-figma">EVENTOS</h2>
+
+            <div className="eventos-grid-figma">
+                {eventos.map((evt: any) => (
+                    <div className="card-evento-figma" key={evt.idEvento}>
+                        <div className="card-imagem-container">
+                            <img
+                                src={resolverImagem(evt.imagemUrl || evt.urlFoto)}
+                                alt={evt.nomeEvento || "Evento"}
+                                onError={(e) => {
+                                    e.currentTarget.onerror = null;
+                                    e.currentTarget.src = visaoImg;
+                                }}
+                            />
                         </div>
-                    )}
-                </div>
-            </main>
-            <Footer />
-        </>
+
+                        <div className="card-conteudo-figma">
+                            <span className="badge-categoria-figma">
+                                {evt.idTipoEventoNavigation?.tituloTipoEvento ||
+                                 evt.tipoEvento?.tituloTipoEvento ||
+                                 evt.tipoEvento?.titulo ||
+                                 "Categoria"}
+                            </span>
+                            <h3 className="card-titulo-figma">{evt.nomeEvento}</h3>
+                            <p className="card-descricao-figma">{evt.descricao}</p>
+
+                            <div className="card-acoes-sutil">
+                                <button
+                                    type="button"
+                                    className="btn-sutil-editar"
+                                    onClick={() => handleEditar(evt)}
+                                >
+                                    Editar
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn-sutil-excluir"
+                                    onClick={() => handleExcluir(evt.idEvento)}
+                                >
+                                    Excluir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </main>
     );
 }
-
-export default EventosAdmin;

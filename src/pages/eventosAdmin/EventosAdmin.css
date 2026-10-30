@@ -1,242 +1,259 @@
-.admin-evento-page {
-    width: 100%;
-    min-height: 85vh;
-    padding: 40px 20px 60px 20px;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
+/* Container Principal */
+.admin-container {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 40px 20px 80px 20px;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
 }
 
-.admin-evento-container {
-    max-width: 1100px;
-    width: 100%;
-}
-
-/* Títulos com Linha Vermelha do Figma */
-.admin-section-titulo,
-.admin-section-subtitulo {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #000000;
+/* Títulos de Seção com Linha Vermelha do Figma */
+.titulo-secao-figma {
     text-align: center;
+    font-size: 20px;
+    font-weight: 700;
     letter-spacing: 0.5px;
-    margin-bottom: 40px;
-    position: relative;
-    display: inline-block;
-    width: 100%;
+    color: #000;
+    margin-bottom: 30px;
 }
 
-.admin-section-titulo::after,
-.admin-section-subtitulo::after {
-    content: "";
+.titulo-secao-figma::after {
+    content: '';
     display: block;
-    width: 120px;
+    width: 70px;
     height: 3px;
-    background-color: #b52146;
+    background-color: #B52542;
     margin: 8px auto 0 auto;
     border-radius: 2px;
 }
 
-/* Caixa do Form + Ilustração */
-.admin-cadastro-box {
+/* Bloco Superior: Imagem + Formulário */
+.admin-painel-box {
     display: flex;
-    gap: 50px;
+    gap: 40px;
     align-items: center;
+    justify-content: center;
     margin-bottom: 60px;
 }
 
-.admin-ilustracao-container {
-    flex: 1;
+/* Card Cinza Arredondado da Imagem (Figma) */
+.admin-card-imagem {
+    width: 400px;
+    height: 280px;
+    background-color: #F0F0F0;
+    border-radius: 40px;
     display: flex;
+    align-items: center;
     justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
 }
 
-.admin-svg-ilustration {
-    width: 100%;
-    max-width: 450px;
-    height: auto;
+.admin-card-imagem img {
+    max-width: 85%;
+    max-height: 85%;
+    object-fit: contain;
 }
 
-.admin-form-evento {
-    flex: 1.2;
+/* Formulário Minimalista */
+.admin-form-figma {
+    flex: 1;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 20px;
 }
 
-/* Estilo dos Inputs e Selects (Linha inferior estilo Figma) */
 .form-linha-dupla {
     display: flex;
     gap: 20px;
 }
 
-.campo-grupo {
-    flex: 1;
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.campo-grupo input,
-.campo-grupo select {
+/* Inputs e Selects Estilo Underline */
+.input-underline {
     width: 100%;
     border: none;
-    border-bottom: 1px solid #707070;
-    padding: 8px 4px;
-    font-size: 0.95rem;
-    color: #333333;
+    border-bottom: 1px solid #B4B4B4;
     background: transparent;
+    padding: 8px 0;
+    font-size: 14px;
+    color: #333;
     outline: none;
     transition: border-color 0.2s;
 }
 
-.campo-grupo input:focus,
-.campo-grupo select:focus {
-    border-bottom-color: #b52146;
+.input-underline:focus {
+    border-bottom-color: #B52542;
 }
 
-.campo-grupo input::placeholder {
-    color: #a0a0a0;
+.input-underline::placeholder {
+    color: #A0A0A0;
 }
 
-.campo-grupo select {
+select.input-underline {
     cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%3C%23333%3E'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 4px center;
-    background-size: 18px;
+    background-color: transparent;
+    color: #333;
 }
 
-.campo-com-icone input {
-    padding-right: 30px;
+select.input-underline option {
+    background-color: #ffffff;
+    color: #333333;
+}
+/* Upload de Foto */
+.upload-label-figma {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #B4B4B4;
+    padding: 8px 0;
+    cursor: pointer;
+    font-size: 14px;
+    color: #A0A0A0;
 }
 
-.icone-input {
-    position: absolute;
-    right: 4px;
+.upload-icone-figma {
     width: 18px;
     height: 18px;
-    pointer-events: none;
+    object-fit: contain;
 }
 
-.icone-upload {
-    position: absolute;
-    right: 4px;
-    font-size: 1.2rem;
-    color: #333333;
-    pointer-events: none;
-}
-
-/* Botão de Cadastro */
-.btn-admin-cadastrar {
+/* Botão Principal Vermelho */
+.btn-submit-figma {
     width: 100%;
-    background-color: #b52146;
-    color: #ffffff;
+    background-color: #B52542;
+    color: #FFFFFF;
     border: none;
-    padding: 12px 0;
     border-radius: 6px;
-    font-size: 1rem;
+    padding: 12px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     margin-top: 10px;
-    transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.2s;
 }
 
-.btn-admin-cadastrar:hover {
-    background-color: #8e1835;
+.btn-submit-figma:hover {
+    background-color: #921C33;
 }
 
-.btn-admin-cadastrar:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
+.btn-cancelar-edicao {
+    background: transparent;
+    border: none;
+    color: #666;
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-align: center;
+    margin-top: 4px;
 }
 
-/* Grid de Eventos */
-.admin-eventos-grid {
+/* Grid dos Cards de Evento */
+.eventos-grid-figma {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
-    margin-top: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 30px;
 }
 
-.card-evento-admin {
-    border: 1px solid #b52146;
-    border-radius: 8px;
+@media (max-width: 900px) {
+    .eventos-grid-figma {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .admin-painel-box {
+        flex-direction: column;
+    }
+}
+
+/* Card de Evento (Fidelidade ao Figma) */
+.card-evento-figma {
+    border: 1.5px solid #B52542;
+    border-radius: 12px;
     overflow: hidden;
-    background: #ffffff;
+    background-color: #FFF;
     display: flex;
     flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.card-evento-admin .card-evento-banner {
+.card-evento-figma:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card-imagem-container {
     width: 100%;
-    height: 180px;
+    height: 170px;
+    overflow: hidden;
+    background-color: #EAEAEA;
 }
 
-.card-evento-admin .card-evento-banner img {
+.card-imagem-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.card-evento-admin .card-evento-body {
+.card-conteudo-figma {
     padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    flex: 1;
 }
 
-.card-evento-admin .card-evento-tag {
-    align-self: flex-start;
-    background-color: #e2e8f0;
-    color: #334155;
-    font-size: 0.75rem;
+.badge-categoria-figma {
+    background-color: #E2E8F0;
+    color: #475569;
+    font-size: 11px;
     font-weight: 600;
-    padding: 4px 12px;
+    padding: 3px 10px;
     border-radius: 12px;
+    align-self: flex-start;
+    margin-bottom: 12px;
 }
 
-.card-evento-admin .card-evento-titulo {
-    font-size: 1rem;
+.card-titulo-figma {
+    font-size: 15px;
     font-weight: 700;
-    color: #000000;
-    margin: 4px 0;
+    color: #000;
+    margin-bottom: 8px;
 }
 
-.card-evento-admin .card-evento-descricao {
-    font-size: 0.85rem;
-    color: #666666;
+.card-descricao-figma {
+    font-size: 13px;
+    color: #64748B;
     line-height: 1.4;
+    flex: 1;
 }
 
-.feedback-mensagem {
-    font-size: 0.85rem;
-    text-align: center;
-    margin-top: 4px;
+/* Ações Sutis no Card */
+.card-acoes-sutil {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid #F1F5F9;
 }
 
-.feedback-mensagem.sucesso {
-    color: #2b8a3e;
+.btn-sutil-editar {
+    background: none;
+    border: none;
+    color: #2563EB;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
-.feedback-mensagem.erro {
-    color: #b52146;
+.btn-sutil-excluir {
+    background: none;
+    border: none;
+    color: #DC2626;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
-.admin-status {
-    text-align: center;
-    color: #666666;
-    font-size: 0.95rem;
-}
-
-@media (max-width: 850px) {
-    .admin-cadastro-box {
-        flex-direction: column;
-    }
-
-    .form-linha-dupla {
-        flex-direction: column;
-        gap: 22px;
-    }
+.btn-sutil-editar:hover, .btn-sutil-excluir:hover {
+    text-decoration: underline;
 }

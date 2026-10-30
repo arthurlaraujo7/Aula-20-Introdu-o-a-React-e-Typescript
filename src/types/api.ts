@@ -27,6 +27,9 @@ export interface Usuario {
 }
 
 export interface Evento {
+    tipoEvento: any;
+    urlFoto: string;
+    idInstituicao: string;
     idEvento?: string;
     id?: string;
     nomeEvento: string;
